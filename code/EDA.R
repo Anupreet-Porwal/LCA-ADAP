@@ -127,6 +127,7 @@ p +
 class.cond.exp.score <- matrix(NA,ncol = length(mod.best.self$probs),
                                nrow = k.best.self)
 colnames(class.cond.exp.score) <- var.names[2:11]
+
 rownames(class.cond.exp.score) <- paste("Class ",1:k.best.self," (",round(mod.best.self$P*100,0),"%)",sep="")
 
 for(i in 1:ncol(class.cond.exp.score)){
@@ -148,8 +149,13 @@ df_cces_melt$variable <- factor(df_cces_melt$variable,
 
 ggplot(df_cces_melt, aes(x = variable, y = value)) + 
   geom_line(aes(color = Class, group = Class),size=1.2)+
+  scale_color_discrete(name = "Class", labels = c("Class 1: High FRO and poor QoL",
+                                                 "Class 2: Low FRO and good QoL", 
+                                                 "Class 3: Intermediate FRO and QoL"))+
   theme_bw()+
-  theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))+
+  theme(axis.text.x = element_text(angle=45, vjust=1, 
+                                   hjust=1), 
+        legend.text=element_text(size=7))+
   xlab("Variable")+
   ylab("Class conditioned expected score (%)")
 
